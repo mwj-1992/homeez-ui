@@ -1,6 +1,32 @@
 .App {
   text-align: center;
 }
+form.quotation-form {
+  max-width: 300px;
+  margin-top: 10px;
+}
+form.quotation-form  label{
+  font-weight:bold;
+      
+}
+form.quotation-form  button{
+  margin-top:15px;
+  width:100%;
+  
+}
+table.table {
+  max-width: 600px;
+  margin-top: 26px;
+}
+img.loader {
+  position: fixed;
+  z-index: 999;
+  top: 0px;
+  bottom: 0px;
+  left: 0px;
+  right: 0px;
+  margin: auto;
+}
 
 .App-logo {
   height: 40vmin;
