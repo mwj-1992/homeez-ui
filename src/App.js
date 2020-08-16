@@ -1,12 +1,14 @@
 import React from 'react';
-import logo from './logo.svg';
 import './App.css';
 const axios = require('axios');
+require('dotenv').config();
 
 class App extends React.Component{
 
+  _api;
   constructor() {
     super();
+    this._api  = process.env.REACT_APP_API ||'http://ec2-3-16-28-33.us-east-2.compute.amazonaws.com';
     this.state = {
       loading:false,
       quotation_info:'',
@@ -24,10 +26,10 @@ class App extends React.Component{
     this.setState({[e.target.name]:e.target.value });
   }
   _loadQuotations=() =>{
-    axios.get('/')
+    axios.get(`${this._api}/`)
     .then(function (response) {
       // handle success
-      console.log(response);
+      this.setState({quotations:response});
     })
     .catch(function (error) {
       // handle error
@@ -41,7 +43,7 @@ class App extends React.Component{
     e.preventDefault();
     const _this = this;
     this.setState({loading: true});
-    axios.post('/',{quotation_info:this.state.quotation_info})
+    axios.post(`${this._api}/`,{quotation_info:this.state.quotation_info})
     .then(function (response) {
       // handle success
       this._loadQuotations();
