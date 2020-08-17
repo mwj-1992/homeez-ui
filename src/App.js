@@ -8,13 +8,12 @@ class App extends React.Component{
   _api;
   constructor() {
     super();
-    this._api  = process.env.REACT_APP_API ||'http://ec2-3-16-28-33.us-east-2.compute.amazonaws.com';
+    this._api  = process.env.REACT_APP_API ||'http://ec2-3-16-28-33.us-east-2.compute.amazonaws.com:3000';
     this.state = {
       loading:false,
       quotation_info:'',
-      quotations: [{
-      "Q_ID":1, "Quotation_Valid":true, "Quotation_Info":'Information'
-    }]};
+      quotations: []
+    };
   }
 
   componentWillMount(){
@@ -26,10 +25,12 @@ class App extends React.Component{
     this.setState({[e.target.name]:e.target.value });
   }
   _loadQuotations=() =>{
-    axios.get(`${this._api}/`)
+    const _this = this;
+
+    axios.get(`${this._api}`)
     .then(function (response) {
       // handle success
-      this.setState({quotations:response});
+      _this.setState({quotations:response.data, quotation_info:''});
     })
     .catch(function (error) {
       // handle error
@@ -43,10 +44,10 @@ class App extends React.Component{
     e.preventDefault();
     const _this = this;
     this.setState({loading: true});
-    axios.post(`${this._api}/`,{quotation_info:this.state.quotation_info})
+    axios.post(`${this._api}`,{quotation_info:this.state.quotation_info})
     .then(function (response) {
       // handle success
-      this._loadQuotations();
+      _this._loadQuotations();
     })
     .catch(function (error) {
       console.log(error);
